@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>conpinion-app-chooser basic tests</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <script src="../lib/webcomponentsjs/webcomponents.js"></script>
+  <script src="../lib/web-component-tester/browser.js"></script>
+  <script src="../lib/test-fixture/test-fixture-mocha.js"></script>
+  <script src="../lib/coffee-script/extras/coffee-script.js"></script>
+  <link rel="import" href="../lib/test-fixture/test-fixture.html">
+  <link rel="import" href="../build/conpinion-app-chooser.html">
+</head>
+
+<body>
+
+  <test-fixture id="element">
+    <template>
+      <conpinion-app-chooser
+          apps='[{"id":"foo","name":"Foo App"}, {"id":"bar","name":"Bar App"}]'
+          active-app-id="bar">
+      </conpinion-app-chooser>
+    </template>
+  </test-fixture>
+
+  <script type="text/coffeescript">
+
+    element = null
+
+    describe 'rendering', ->
+
+      beforeEach -> element = fixture 'element'
+
+      it 'should render a paper-item for each app', (done) ->
+        flush ->
+          expect(element.$$('paper-item:nth-child(1)').textContent.trim()).to.eql 'Foo App'
+          expect(element.$$('paper-item:nth-child(2)').textContent.trim()).to.eql 'Bar App'
+          done()
+
+      it 'should render the name of the currently selected app', (done) ->
+        flush ->
+          expect(element.$$('#activeApp').textContent.trim()).to.eql 'Bar App'
+          done()
+
+  </script>
+
+</body>
+
+</html>

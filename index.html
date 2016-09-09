@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>conpinion-app-chooser web component</title>
+  <script src='lib/webcomponentsjs/webcomponents-lite.min.js'></script>
+  <link href="build/conpinion-app-chooser.html" rel="import">
+</head>
+
+<body>
+
+  <h1>conpinion-app-chooser web component</h1>
+
+  <h2>A menu from which the user can choose the active application</h2>
+
+  <p>
+    <a href="test/index.html">Click here to run the tests...</a>
+  </p>
+
+  <p>
+    <a href="README.md">Click here to read the documentation...</a>
+  </p>
+
+  <p>
+    <a href="CHANGELOG.md">Click here to read the changelog...</a>
+  </p>
+
+  <h2>Demo</h2>
+
+  <template is="dom-bind">
+    <conpinion-app-chooser active-app-id="contacts" active-app="{{activeApp}}"
+                           apps="[{id: 'contact-suite', name: 'Contact Suite', host: 'contact-suite'}]">
+    </conpinion-app-chooser>
+    <div style="margin-top: 2em;">
+      <span>Active app id: </span><span>[[activeApp.id]]</span>
+    </div>
+  </template>
+
+  <script>
+    var t = document.querySelector('template');
+  </script>
+
+  <script src="//localhost:35729/livereload.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,137 @@
+
+<!--
+Copyright (c) 2015 TELCAT MULTICOM GmbH. All rights reserved.
+Copyright (c) 2016 conpinion GbR. All rights reserved.
+
+Element: conpinion-app-chooser
+Version: 0.0.3
+Description: A menu from which the user can choose the active application
+-->
+
+
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../paper-menu/paper-menu.html">
+<link rel="import" href="../paper-menu-button/paper-menu-button.html">
+
+<dom-module id="conpinion-app-chooser">
+
+  <template>
+
+<style>#logo {
+  margin-top: 16px;
+}
+#logo img {
+  height: 20px;
+}
+#activeApp {
+  margin-left: 60px;
+  font-size: 1em;
+  font-style: italic;
+  color: #3a3a3a;
+}
+</style>
+
+    <div class="layout vertical">
+
+      <div class="layout horizontal">
+        <paper-menu-button>
+          <paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>
+          <paper-menu class="dropdown-content" selected="{{_selectedIndex}}">
+            <template is="dom-repeat" items="[[apps]]" as="app">
+              <paper-item data-url="">[[app.name]]</paper-item>
+            </template>
+          </paper-menu>
+        </paper-menu-button>
+
+        <div id="logo">
+          <img src="conpinion-logo.png">
+        </div>
+      </div>
+
+      <div id="activeApp">[[activeApp.name]]</div>
+
+    </div>
+
+  </template>
+
+<script type="text/javascript">(function() {
+  Polymer({
+    is: 'conpinion-app-chooser',
+    properties: {
+      domain: {
+        type: String,
+        value: 'service.local'
+      },
+      method: {
+        type: String,
+        value: 'http'
+      },
+      apps: {
+        type: Array,
+        value: []
+      },
+      auto: {
+        type: Boolean,
+        value: false
+      },
+      activeApp: {
+        type: Object,
+        readOnly: true,
+        notify: true
+      },
+      activeAppId: {
+        type: String,
+        notify: true,
+        observer: '_selectApp'
+      },
+      _selectedIndex: {
+        type: Number,
+        observer: '_updateSelectedApp'
+      },
+      _uiSelection: {
+        type: Boolean,
+        value: false
+      }
+    },
+    _updateSelectedApp: function() {
+      var ref;
+      this._setActiveApp(this.apps[this._selectedIndex]);
+      this._uiSelection = true;
+      this.activeAppId = (ref = this.activeApp) != null ? ref.id : void 0;
+      return this._uiSelection = false;
+    },
+    _selectApp: function(newAppId, oldAppId) {
+      var app, i;
+      if (this._uiSelection) {
+        if (this.auto && oldAppId) {
+          return this._openApp();
+        }
+      } else {
+        return this._selectedIndex = ((function() {
+          var j, len, ref, results;
+          ref = this.apps;
+          results = [];
+          for (i = j = 0, len = ref.length; j < len; i = ++j) {
+            app = ref[i];
+            if (app.id === this.activeAppId) {
+              results.push(i);
+            }
+          }
+          return results;
+        }).call(this))[0];
+      }
+    },
+    _openApp: function() {
+      var url;
+      url = this.method + "://" + this.activeApp.host + "." + this.domain;
+      return window.open(url, '_self');
+    }
+  });
+
+}).call(this);
+</script>
+
+</dom-module>>
