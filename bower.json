@@ -1,0 +1,46 @@
+{
+  "name": "conpinion-app-chooser",
+  "description": "A menu from which the user can choose the active application",
+  "version": "0.0.3",
+  "main": "conpinion-app-chooser.html",
+  "license": "MIT",
+  "ignore": [
+    "bin",
+    "build",
+    "lib",
+    "node_modules",
+    "src",
+    "test",
+    "tmpl",
+    "package.json",
+    "**/.*",
+    "**/*.log",
+    "**/*.sublime-*",
+    "atlassian-ide-plugin.xml"
+  ],
+  "keywords": [
+    "web-components"
+  ],
+  "authors": [
+    "Dirk Grappendorf <dirk.grappendorf@conpinion.de>",
+    "Andreas Haardt <andreas.haardt@conpinion.de>",
+    "Tim Völpel <tim.voelpel@conpinion.de>"
+  ],
+  "homepage": "https://github.com/conpinion/conpinion-app-chooser",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/conpinion/conpinion-app-chooser.git"
+  },
+  "dependencies": {
+    "paper-item": "PolymerElements/paper-item#^1.0.0",
+    "paper-icon-button": "PolymerElements/paper-icon-button#^1.0.0",
+    "paper-menu": "PolymerElements/paper-menu#^1.0.0",
+    "paper-menu-button": "PolymerElements/paper-menu-button#^1.0.0"
+  },
+  "devDependencies": {
+    "coffee-script": "^1.10.0",
+    "happen": "^0.2.0",
+    "web-component-tester": "Polymer/web-component-tester#^3.3.21",
+    "test-fixture": "PolymerElements/test-fixture#^1.0.0"
+  }
+}

@@ -1,0 +1,52 @@
+<!-- build:process -->
+<!--
+<%= copyright %>
+Element: <%= pkg.name %>
+Version: <%= pkg.version %>
+Description: <%= pkg.description %>
+-->
+<!-- /build -->
+
+<link rel="import" href="../lib/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../lib/iron-icons/iron-icons.html">
+<link rel="import" href="../lib/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../lib/paper-item/paper-item.html">
+<link rel="import" href="../lib/paper-menu/paper-menu.html">
+<link rel="import" href="../lib/paper-menu-button/paper-menu-button.html">
+
+<dom-module id="conpinion-app-chooser">
+
+  <template>
+
+    <!-- build:style inline conpinion-app-chooser -->
+    <link rel="stylesheet" href="conpinion-app-chooser.css">
+    <!-- /build -->
+
+    <div class="layout vertical">
+
+      <div class="layout horizontal">
+        <paper-menu-button>
+          <paper-icon-button icon="more-vert" class="dropdown-trigger"></paper-icon-button>
+          <paper-menu class="dropdown-content" selected="{{_selectedIndex}}">
+            <template is="dom-repeat" items="[[apps]]" as="app">
+              <paper-item data-url="">[[app.name]]</paper-item>
+            </template>
+          </paper-menu>
+        </paper-menu-button>
+
+        <div id="logo">
+          <img src="conpinion-logo.png">
+        </div>
+      </div>
+
+      <div id="activeApp">[[activeApp.name]]</div>
+
+    </div>
+
+  </template>
+
+  <!-- build:script inline conpinion-app-chooser -->
+  <script src="conpinion-app-chooser.js"></script>
+  <!-- /build -->
+
+</dom-module>>

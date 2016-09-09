@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>conpinion-example-element interaction tests</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <script src="../lib/webcomponentsjs/webcomponents.js"></script>
+  <script src="../lib/web-component-tester/browser.js"></script>
+  <script src="../lib/coffee-script/extras/coffee-script.js"></script>
+  <script src="../lib/test-fixture/test-fixture-mocha.js"></script>
+  <script src="../lib/happen/happen.js"></script>
+  <link rel="import" href="../lib/test-fixture/test-fixture.html">
+  <link rel="import" href="../build/conpinion-app-chooser.html">
+</head>
+
+<body>
+
+  <test-fixture id="chooser">
+    <template>
+      <conpinion-app-chooser
+          apps='[{"id":"foo","name":"Foo App"}, {"id":"bar","name":"Bar App"}]'
+          active-app-id="foo">
+      </conpinion-app-chooser>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="chooser-with-auto">
+    <template>
+      <conpinion-app-chooser
+          domain="example.com" method="https" auto
+          apps='[
+          {"id":"foo","name":"Foo App","host":"foo.app"},
+          {"id":"bar","name":"Bar App","host":"bar.app"}]'
+          active-app-id="foo">
+      </conpinion-app-chooser>
+    </template>
+  </test-fixture>
+
+  <script type="text/coffeescript">
+
+    element = null
+
+    describe 'clicking on an app item', ->
+
+      beforeEach (done) ->
+        element = fixture 'chooser'
+        flush ->
+          happen.once element.querySelector('paper-icon-button'), type: 'click'
+          happen.once element.querySelector('paper-item:nth-child(2)'), type: 'click'
+          done()
+
+      it 'should selected the app', ->
+        expect(element.$$('#activeApp').textContent.trim()).to.eql 'Bar App'
+
+      it 'should update the activeAppId property', ->
+        expect(element.activeAppId).to.eql 'bar'
+
+      it 'should update the activeApp property', ->
+        expect(element.activeApp).to.eql {id: 'bar', name: 'Bar App'}
+
+    describe 'when the auto property is set', ->
+
+      beforeEach ->
+        element = fixture 'chooser-with-auto'
+
+      describe 'clicking on an app item', ->
+
+        beforeEach (done) ->
+          sinon.stub(window, 'open')
+          flush ->
+            happen.once element.querySelector('paper-icon-button'), type: 'click'
+            happen.once element.querySelector('paper-item:nth-child(2)'), type: 'click'
+            done()
+
+        it 'should open the app url', (done) ->
+          expect(window.open).to.have.been.calledWith 'https://bar.app.example.com', '_self'
+          done()
+
+  </script>
+
+</body>
+
+</html>
